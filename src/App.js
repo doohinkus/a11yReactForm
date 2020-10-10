@@ -1,24 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import TextInput from './components/TextInput';
+import { useStateValue } from './state/state.provider';
+import { ACTIONS } from './state/form.duck';
 function App() {
+  const [{ fields }, dispatch] = useStateValue();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <h1>React Form A11y</h1>
+     <TextInput
+      label="Enter Name:"
+      type="text" 
+      id="unique name"
+    
+      onBlur={e => console.log("blurred ", e.target.value)}
+    />
     </div>
   );
 }
