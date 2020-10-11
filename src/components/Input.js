@@ -18,13 +18,15 @@ export default function Input({...props}){
       return
     }
     const [{ fields }, dispatch] = useStateValue();
-    console.log(fields)
+    // console.log(fields)
     const fieldValues = fields.filter((field) => field.id === props.id)[0];
-    const hasFieldValues = fields && fieldValues|| false;
+    const hasFieldValues = fields && fieldValues;
+    const showError = hasFieldValues && fieldValues.isReadyForValidation && fieldValues.error;
    
     return (<div>
         <label>{props.label}</label>
         <input 
+          tabIndex={0}
           onChange={e => dispatch(updateFieldValue(e))}
           onBlur={() => handleBlur({fieldValues, validate: props.validate})}
           {...props}
@@ -34,7 +36,7 @@ export default function Input({...props}){
               hasFieldValues && JSON.stringify(fieldValues)
             }
             {hasFieldValues && fieldValues.isReadyForValidation && "READY"}
-            {hasFieldValues && fieldValues.isReadyForValidation && fieldValues.error && <Error>Hey man Error</Error>}
+            {showError && <Error>Hey man Error</Error>}
             
           </p>
     </div>)

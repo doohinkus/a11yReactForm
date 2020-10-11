@@ -5,6 +5,6 @@ const errorStyle = {
 }
 export default function Error({...props}){
     return (
-    <span style={errorStyle}>{props.children}</span>
+      <div style={errorStyle}>{props.children}</div>
     )
 }

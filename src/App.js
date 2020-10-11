@@ -11,7 +11,12 @@ function App() {
       type="text" 
       id="unique name"
       validate={val => val.length > 4}
-    
+    />
+     <Input
+      label="Enter Other Name:"
+      type="text" 
+      id="other name"
+      validate={val => val.length > 2}
     />
     </div>
   );
