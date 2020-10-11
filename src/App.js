@@ -10,6 +10,7 @@ function App() {
       label="Enter Name:"
       type="text" 
       id="unique name"
+      errorMessage="Please enter a name fewer than 5 characters."
       validate={val => val.length > 4}
     />
      <Input

@@ -7,13 +7,7 @@ export const initialState = {
             isReadyForValidation: false
         
    }],
-   errors: [{
-       field: {
-           id: 0,
-           rank: 0,
-           errorMessage: ""
-       }
-   }],
+   errors: [],
    submitShape: function (){
        return {
            fields: [
@@ -100,12 +94,24 @@ export const formReducer = (state, action) => {
 
     switch (action.type) {
         case ACTIONS.CHANGE_FIELD_VALUE:
-        case ACTIONS.ADD_FIELD_ERROR:
-        case ACTIONS.CLEAR_FIELD_ERROR:
-          return {
-            ...state,
-            fields: [...updatedFieldData(state, action)]
-          };
+            case ACTIONS.CLEAR_FIELD_ERROR:
+                return {
+                    ...state,
+                    fields: [...updatedFieldData(state, action)]
+                };
+            case ACTIONS.ADD_FIELD_ERROR:
+                return {
+                    ...state,
+                    fields: [...updatedFieldData(state, action)],
+                    // remove dups
+                    errors: [
+                        ...state.errors,
+                        {
+                            id: action.payload.id,
+                            errorMessage: action.payload.errorMessage || "Field error"
+                        }
+                    ]
+                };
         default:
             return state    
     }
