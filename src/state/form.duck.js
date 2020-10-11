@@ -4,6 +4,7 @@ export const initialState = {
             id: 0,
             type: "text",
             label: "",
+            isReadyForValidation: false
             // rank: 0,
             // validationFunction: n => console.log(n),
             // error: false,
@@ -11,7 +12,6 @@ export const initialState = {
             // value: "",
             // defaultClasses:[],
             // omvClasses:[],
-            // isClean: true
         
    }],
    errors: [{
@@ -32,17 +32,47 @@ export const initialState = {
    }
 }
 
-
-export const ACTIONS = {
-  CHANGE_FIELD_VALUE: "CHANGE_FIELD_VALUE"
-}
+// HELPERS
 function filterFieldById({fields, id}){
     return fields.filter(field => field.id !== id);
 }
 function getFieldById({fields, id}){
+    console.log("filed by id>>", fields.filter(field => field.id === id)[0])
     return fields.filter(field => field.id === id)[0];
 }
 
+// ACTIONS
+export const ACTIONS = {
+  CHANGE_FIELD_VALUE: "CHANGE_FIELD_VALUE",
+  VALIDATE_FIELD_VALUE: "VALIDATE_FIELD_VALUE"
+}
+
+
+// ACTION CREATORS
+export function updateFieldValue({target}){
+  return {
+      type: ACTIONS.CHANGE_FIELD_VALUE,
+      payload: {
+        id: target.id,
+        value: target.value,
+        isReadyForValidation: true
+      }
+  }
+}
+export function validateFieldValue({target, validationFunction}){
+
+//   return {
+//       type: ACTIONS.VALIDATE_FIELD_VALUE,
+//       payload: {
+//         id: target.id,
+//         value: target.value,
+//         isClean: false
+//       }
+//   }
+}
+
+
+// ROOT REDUCER
 export const formReducer = (state, action) => {
     console.log(state, " ::: ", state.fields);
 
@@ -61,8 +91,7 @@ export const formReducer = (state, action) => {
                             fields: state.fields,
                             id: action.payload.id
                       }), 
-                     id: action.payload.id,
-                     value: action.payload.value
+                     ...action.payload
                  }
                 
             ]
