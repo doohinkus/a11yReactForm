@@ -10,7 +10,7 @@ function App() {
       label="Enter Name:"
       type="text" 
       id="unique name"
-      validate={val => val.length > 2}
+      validate={val => val.length > 4}
     
     />
     </div>
