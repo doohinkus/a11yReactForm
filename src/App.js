@@ -21,6 +21,23 @@ function App() {
       errorMessage="Please enter a name fewer than 3 characters."
       validate={val => val.length > 2}
     />
+    <div>
+    <p>Radio</p>
+    <Input
+      label="Enter Other Name:"
+      type="radio" 
+      id="radio"
+      name="radio"
+      errorMessage="Please make a selection--yo."
+    />
+    <Input
+      label="Enter Other Name:"
+      type="radio" 
+      id="radio"
+      name="radio"
+      errorMessage="Please make a selection--yo."
+    />
+    </div>
     <Select
      label="Please select:"
      id="select"
