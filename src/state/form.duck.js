@@ -24,7 +24,7 @@ function filterFieldById({fields, id}){
     return fields.filter(field => field.id !== id);
 }
 function getFieldById({fields, id}){
-    console.log("filed by id>>", fields.filter(field => field.id === id)[0])
+    console.log("field by id>>", fields.filter(field => field.id === id)[0])
     return fields.filter(field => field.id === id)[0];
 }
 
@@ -43,7 +43,22 @@ function updatedFieldData(state, action){
                  ...action.payload
          }
     ]
-    
+}
+function updatedErrorData(state, action){
+    return [
+        ...filterFieldById({
+            errors: state.errors, 
+            id: action.payload.id
+        }),
+        
+         {
+             ...getFieldById({
+                    fields: state.fields,
+                    id: action.payload.id,
+                }), 
+                 ...action.payload
+         }
+    ]
 }
 
 // ACTIONS
@@ -105,7 +120,8 @@ export const formReducer = (state, action) => {
                     fields: [...updatedFieldData(state, action)],
                     // remove dups
                     errors: [
-                        ...state.errors,
+                        // ...updatedErrorData[state, action]
+                        // ...state.errors,
                         {
                             id: action.payload.id,
                             errorMessage: action.payload.errorMessage || "Field error"

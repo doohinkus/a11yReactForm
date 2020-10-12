@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Input from './components/Input';
+import Select from './components/Select';
 function App() {
 
   return (
@@ -17,8 +18,21 @@ function App() {
       label="Enter Other Name:"
       type="text" 
       id="other name"
+      errorMessage="Please enter a name fewer than 3 characters."
       validate={val => val.length > 2}
     />
+    <Select
+     label="Please select:"
+     id="select"
+     errorMessage="Please select an option."
+     validate={v => v === "unselected"}
+     defaultValue={"unselected"}
+     >
+      <option value="unselected">please select</option>
+      <option value="one">option one</option>
+      <option value="two">option two</option>
+      <option value="three">option three</option>
+    </Select>
     </div>
   );
 }
