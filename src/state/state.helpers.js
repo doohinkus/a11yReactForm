@@ -5,12 +5,15 @@ export function handleBlur({fieldValues, errorMessage, validate, dispatch}){
     if(validate(fieldValues.value)){
       return dispatch(addFieldError(
           {
-            id: fieldValues.id, 
+            name: fieldValues.name, 
             errorMessage: errorMessage || "default error message"
           })
         );
     }
-    return dispatch(clearFieldError({id: fieldValues.id}));
+    return dispatch(clearFieldError({name: fieldValues.name}));
   }
   return
 }
+
+export const fieldValues = (fields, props) => fields.filter((field) => field.name === props.name)[0];
+  

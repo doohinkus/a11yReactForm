@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useStateValue } from '../state/state.provider';
 import { handleBlur } from  '../state/state.helpers';
 import { updateFieldValue } from '../state/form.duck';
@@ -7,11 +7,11 @@ import Error from './Error';
 export default function Select({...props}){
     const [{ fields }, dispatch] = useStateValue();
     console.log(fields)
-    const fieldValues = fields.filter((field) => field.id === props.id)[0];
+    const fieldValues = fields.filter((field) => field.name === props.name)[0];
     const hasFieldValues = fields && fieldValues;
     const showError = hasFieldValues && fieldValues.isReadyForValidation && fieldValues.error;
    
-    return (<div>
+    return (<Fragment>
         <label>{props.label}</label>
         <select 
           tabIndex={0}
@@ -33,5 +33,5 @@ export default function Select({...props}){
             }
           </p>
           {showError && <Error>{fieldValues.errorMessage}</Error>}
-    </div>)
+    </Fragment>)
 };

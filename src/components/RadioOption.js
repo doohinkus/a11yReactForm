@@ -5,16 +5,19 @@ import { updateFieldValue } from '../state/form.duck';
 import Error from './Error';
 
 const inputStyle = {
-  display: 'block',
+  // display: 'inline',
+  verticalAlign: "middle"
 }
 const labelStyle = {
-  margin: '.5em 0',
-  display: 'block'
+  verticalAlign: "middle"
+  // margin: '.25em',
+  // display: 'inline'
 }
-export default function Input({...props}){
+export default function RadioOption({...props}){
     const [{ fields }, dispatch] = useStateValue();
     console.log(fields)
     const fieldValues = fields.filter((field) => field.name === props.name)[0];
+    // const fieldValues = fieldValues(fields, props);
     const hasFieldValues = fields && fieldValues;
     const showError = hasFieldValues && fieldValues.isReadyForValidation && fieldValues.error;
    
@@ -23,6 +26,7 @@ export default function Input({...props}){
         <input 
           style={inputStyle}
           tabIndex={0}
+          type="radio"
           onChange={e => dispatch(updateFieldValue(e))}
           onBlur={() => handleBlur({ 
               dispatch,

@@ -1,7 +1,7 @@
 export const initialState = {
   fields: [{
        
-            id: 0,
+            name: 0,
             type: "text",
             label: "",
             isReadyForValidation: false
@@ -20,25 +20,25 @@ export const initialState = {
 }
 
 // HELPERS
-function filterFieldById({fields, id}){
-    return fields.filter(field => field.id !== id);
+function filterFieldById({fields, name}){
+    return fields.filter(field => field.name !== name);
 }
-function getFieldById({fields, id}){
-    console.log("field by id>>", fields.filter(field => field.id === id)[0])
-    return fields.filter(field => field.id === id)[0];
+function getFieldById({fields, name}){
+    console.log("field by name>>", fields.filter(field => field.name === name)[0])
+    return fields.filter(field => field.name === name)[0];
 }
 
 function updatedFieldData(state, action){
     return [
         ...filterFieldById({
             fields: state.fields, 
-            id: action.payload.id
+            name: action.payload.name
         }),
         
          {
              ...getFieldById({
                     fields: state.fields,
-                    id: action.payload.id,
+                    name: action.payload.name,
                 }), 
                  ...action.payload
          }
@@ -48,7 +48,7 @@ function updatedErrorData(state, action){
     return [
         ...filterFieldById({
             errors: state.errors, 
-            id: action.payload.id
+            name: action.payload.name
         }),
         
          {
@@ -75,7 +75,7 @@ export function updateFieldValue({target}){
   return {
       type: ACTIONS.CHANGE_FIELD_VALUE,
       payload: {
-        id: target.id,
+        name: target.name,
         value: target.value,
         isReadyForValidation: true
       }
@@ -85,7 +85,7 @@ export function addFieldError(payload){
   return {
       type: ACTIONS.ADD_FIELD_ERROR,
       payload: {
-          id: payload.id,
+          name: payload.name,
           error: true,
           errorMessage: payload.errorMessage || null
       }
@@ -95,7 +95,7 @@ export function clearFieldError(payload){
   return {
       type: ACTIONS.ADD_FIELD_ERROR,
       payload: {
-          id: payload.id,
+          name: payload.name,
           error: false,
           errorMessage: null
       }
@@ -123,7 +123,7 @@ export const formReducer = (state, action) => {
                         // ...updatedErrorData[state, action]
                         // ...state.errors,
                         {
-                            id: action.payload.id,
+                            name: action.payload.name,
                             errorMessage: action.payload.errorMessage || "Field error"
                         }
                     ]
