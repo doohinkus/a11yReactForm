@@ -27,6 +27,14 @@ function getFieldById({fields, name}){
     console.log("field by name>>", fields.filter(field => field.name === name)[0])
     return fields.filter(field => field.name === name)[0];
 }
+// function filterErrorById({errors, name}){
+//     return errors.filter(field => field.name !== name);
+// }
+// function getErrorById({fields, name}){
+//     console.log("field by name>>", fields.filter(field => field.name === name)[0])
+//     return fields.filter(field => field.name === name)[0];
+// }
+
 
 function updatedFieldData(state, action){
     return [
@@ -120,8 +128,7 @@ export const formReducer = (state, action) => {
                     fields: [...updatedFieldData(state, action)],
                     // remove dups
                     errors: [
-                        // ...updatedErrorData[state, action]
-                        // ...state.errors,
+                        ...state.errors.filter(error => error.name !== action.payload.name),
                         {
                             name: action.payload.name,
                             errorMessage: action.payload.errorMessage || "Field error"
