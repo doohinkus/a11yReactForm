@@ -1,4 +1,4 @@
-import { addFieldError, clearFieldError } from '../state/form.duck';
+import { addFieldError, clearFieldError, initFieldValues } from '../state/form.duck';
 
 export function handleBlur({fieldValues, errorMessage, validate, dispatch}){
   if(fieldValues && fieldValues.value && validate){
@@ -16,4 +16,10 @@ export function handleBlur({fieldValues, errorMessage, validate, dispatch}){
 }
 
 export const fieldValues = (fields, props) => fields.filter((field) => field.name === props.name)[0];
+
+
+export function addField({...props}, dispatch){
+  dispatch(initFieldValues({...props}));
+}
+
   

@@ -1,13 +1,6 @@
 export const initialState = {
-  fields: [{
-       
-            name: 0,
-            type: "text",
-            label: "",
-            isReadyForValidation: false
-        
-   }],
-   errors: [],
+  fields: [],
+//    errors: [],
    submitShape: function (){
        return {
            fields: [
@@ -20,11 +13,11 @@ export const initialState = {
 }
 
 // HELPERS
-function filterFieldById({fields, name}){
+function filterFieldByName({fields, name}){
     return fields.filter(field => field.name !== name);
 }
-function getFieldById({fields, name}){
-    console.log("field by name>>", fields.filter(field => field.name === name)[0])
+function getFieldByName({fields, name}){
+    // console.log("field by name>>", fields.filter(field => field.name === name)[0])
     return fields.filter(field => field.name === name)[0];
 }
 // function filterErrorById({errors, name}){
@@ -38,13 +31,13 @@ function getFieldById({fields, name}){
 
 function updatedFieldData(state, action){
     return [
-        ...filterFieldById({
+        ...filterFieldByName({
             fields: state.fields, 
             name: action.payload.name
         }),
         
          {
-             ...getFieldById({
+             ...getFieldByName({
                     fields: state.fields,
                     name: action.payload.name,
                 }), 
@@ -52,22 +45,16 @@ function updatedFieldData(state, action){
          }
     ]
 }
-function updatedErrorData(state, action){
+
+function removeFieldByName(state, action){
     return [
-        ...filterFieldById({
-            errors: state.errors, 
+        ...filterFieldByName({
+            fields: state.fields, 
             name: action.payload.name
-        }),
-        
-         {
-             ...getFieldById({
-                    fields: state.fields,
-                    id: action.payload.id,
-                }), 
-                 ...action.payload
-         }
+        })
     ]
 }
+
 
 // ACTIONS
 export const ACTIONS = {
@@ -75,11 +62,38 @@ export const ACTIONS = {
   VALIDATE_FIELD_VALUE: "VALIDATE_FIELD_VALUE",
   ADD_FIELD_ERROR: "ADD_FIELD_ERROR",
   CLEAR_FIELD_ERROR: "CLEAR_FIELD_ERROR",
+  REMOVE_FIELD_VALUE: "REMOVE_FIELD_VALUE",
 }
 
 
 // ACTION CREATORS
+
+export function initFieldValues({...props}){
+  return {
+      type: ACTIONS.CHANGE_FIELD_VALUE,
+      payload: {
+        ...props,
+        children: props 
+           && props.children 
+           ? {...props.children.map(({props}) => ({...props}))} 
+           : null
+
+      }
+  }
+}
+
+export function removeFieldValues({...props}){
+    console.log("PROPS>>>>", ...props)
+    return {
+        type: ACTIONS.REMOVE_FIELD_VALUE,
+        payload: {
+        ...props
+        }
+    }
+}
+
 export function updateFieldValue({target}){
+    // use props
   return {
       type: ACTIONS.CHANGE_FIELD_VALUE,
       payload: {
@@ -87,8 +101,9 @@ export function updateFieldValue({target}){
         value: target.value,
         isReadyForValidation: true
       }
-  }
+    }
 }
+
 export function addFieldError(payload){
   return {
       type: ACTIONS.ADD_FIELD_ERROR,
@@ -113,28 +128,35 @@ export function clearFieldError(payload){
 
 // ROOT REDUCER
 export const formReducer = (state, action) => {
-    console.log(state, " ::: ", state.fields);
+    // console.log(state, " ::: ", state.fields);
 
     switch (action.type) {
         case ACTIONS.CHANGE_FIELD_VALUE:
-            case ACTIONS.CLEAR_FIELD_ERROR:
-                return {
-                    ...state,
-                    fields: [...updatedFieldData(state, action)]
-                };
-            case ACTIONS.ADD_FIELD_ERROR:
-                return {
-                    ...state,
-                    fields: [...updatedFieldData(state, action)],
-                    // remove dups
-                    errors: [
-                        ...state.errors.filter(error => error.name !== action.payload.name),
-                        {
-                            name: action.payload.name,
-                            errorMessage: action.payload.errorMessage || "Field error"
-                        }
-                    ]
-                };
+        case ACTIONS.CLEAR_FIELD_ERROR:
+        case ACTIONS.ADD_FIELD_ERROR:
+            return {
+                ...state,
+                fields: [...updatedFieldData(state, action)]
+            };
+        case ACTIONS.REMOVE_FIELD_VALUE:
+            return {
+                ...state,
+                fields: [...removeFieldByName(state, action)]
+            }
+          
+        //         return {
+        //             ...state,
+        //             fields: [...updatedFieldData(state, action)],
+        //             // remove dups
+        //             errors: [
+        //                 ...state.errors.filter(error => error.name !== action.payload.name),
+        //                 {
+        //                     // name: action.payload.name,
+        //                     // errorMessage: action.payload.errorMessage || "Field error"
+        //                     ...action.payload
+        //                 }
+        //             ]
+        //         };
         default:
             return state    
     }

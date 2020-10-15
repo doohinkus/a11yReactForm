@@ -1,7 +1,7 @@
-import React, {Fragment} from 'react';
-import { useStateValue } from '../state/state.provider';
-import { handleBlur } from  '../state/state.helpers';
-import { updateFieldValue } from '../state/form.duck';
+import React, { Fragment, useEffect } from 'react';
+import { useStateValue, useInit } from '../state/state.provider';
+import { handleBlur, addField } from  '../state/state.helpers';
+import { updateFieldValue, initFieldValues } from '../state/form.duck';
 import Error from './Error';
 
 const inputStyle = {
@@ -12,8 +12,19 @@ const labelStyle = {
   display: 'block'
 }
 export default function Input({...props}){
+    useEffect(() => {
+      // function addField({...props}){
+      //   dispatch(initFieldValues({...props}));
+      // }
+      // function removeField({name}){
+      //   console.log("removed ")
+      //   dispatch(initFieldValues({name}));
+      // }
+      addField({...props}, dispatch);
+      // return removeField({...props.name});
+    }, []);
     const [{ fields }, dispatch] = useStateValue();
-    console.log(fields)
+    // console.log(fields)
     const fieldValues = fields.filter((field) => field.name === props.name)[0];
     const hasFieldValues = fields && fieldValues;
     const showError = hasFieldValues && fieldValues.isReadyForValidation && fieldValues.error;

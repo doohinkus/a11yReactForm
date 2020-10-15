@@ -1,4 +1,10 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import { useStateValue, useInit } from '../state/state.provider';
+import RadioOption from './RadioOption';
+import { handleBlur, addField } from  '../state/state.helpers';
+import { updateFieldValue, initFieldValues } from '../state/form.duck';
+
+
 const labelStyle = {
     color: 'red',
     fontWeight: 'bold'
@@ -13,13 +19,29 @@ const legendStyle = {
   textAlign: 'left'
 }
 export default function RadioField({...props}){
-    return (
-      <Fragment>
-        <fieldset style={fieldStyle}>
-          {props.legend ? <legend style={legendStyle}>{props.legend}</legend> : null} 
-          <label style={labelStyle}>{props.label}</label>
-          {props.children}
-        </fieldset>
-      </Fragment>
-    )
+  const [{ fields }, dispatch] = useStateValue();
+
+  useEffect(() => {
+    addField({...props}, dispatch);
+  }, []);
+  console.log("STATE>>>>", fields)
+  return (
+    <Fragment>
+      <fieldset style={fieldStyle}>
+        {props.legend ? <legend style={legendStyle}>{props.legend}</legend> : null} 
+        <label style={labelStyle}>{props.label}</label>
+        {/* {props.children} */}
+        {props.options.map(({value}) => {
+          return <RadioOption
+            label={`Option ${value}: `}
+            name={props.name}
+            key={value}
+            id={value}
+            value={value}
+          />
+        })}
+        
+      </fieldset>
+    </Fragment>
+  )
 }

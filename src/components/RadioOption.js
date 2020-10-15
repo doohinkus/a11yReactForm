@@ -1,6 +1,6 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import { useStateValue } from '../state/state.provider';
-import { handleBlur } from  '../state/state.helpers';
+import { handleBlur, addField } from  '../state/state.helpers';
 import { updateFieldValue } from '../state/form.duck';
 import Error from './Error';
 
@@ -15,7 +15,8 @@ const labelStyle = {
 }
 export default function RadioOption({...props}){
     const [{ fields }, dispatch] = useStateValue();
-    console.log(fields)
+    
+    // console.log(fields)
     const fieldValues = fields.filter((field) => field.name === props.name)[0];
     // const fieldValues = fieldValues(fields, props);
     const hasFieldValues = fields && fieldValues;

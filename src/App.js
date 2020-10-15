@@ -3,7 +3,6 @@ import Input from './components/Input';
 import Select from './components/Select';
 import Field from './components/Field';
 import RadioField from './components/RadioField';
-import RadioOption from './components/RadioOption';
 
 function App() {
   const options = [{value: "one"}, {value: "two"}, {value: "three"}]
@@ -26,27 +25,11 @@ function App() {
           validate={val => val.length > 2}
         />
      </Field>
-    <RadioField legend="Please select one:">
-      {options.map(({value}) => {
-        return <RadioOption
-          label={`Option ${value}: `}
-          name="radio"
-          key={value}
-          id={value}
-          value={value}
-        />
-      })}
-      {/* <RadioOption
-        label="Enter Other Name:"
-        id="radio1"
-        errorMessage="Please make a selection--yo."
-      />
-      <RadioOption
-        label="Enter Other Name:"
-        id="radio2"
-        errorMessage="Please make a selection--yo."
-      /> */}
-    </RadioField>
+     <RadioField 
+      legend="Please select one:"
+      name="radio"
+      options={options}
+    />  
     <Field legend="Please select one: ">
       <Select
         label="Please select:"

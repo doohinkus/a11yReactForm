@@ -1,12 +1,13 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useStateValue } from '../state/state.provider';
-import { handleBlur } from  '../state/state.helpers';
+import { handleBlur, addField } from  '../state/state.helpers';
 import { updateFieldValue } from '../state/form.duck';
 import Error from './Error';
 
 export default function Select({...props}){
     const [{ fields }, dispatch] = useStateValue();
-    console.log(fields)
+  
+    // console.log(fields)
     const fieldValues = fields.filter((field) => field.name === props.name)[0];
     const hasFieldValues = fields && fieldValues;
     const showError = hasFieldValues && fieldValues.isReadyForValidation && fieldValues.error;
@@ -15,6 +16,7 @@ export default function Select({...props}){
         <label>{props.label}</label>
         <select 
           tabIndex={0}
+          name={props.name || null}
           onChange={e => dispatch(updateFieldValue(e))}
           onBlur={() => handleBlur({ 
               dispatch,
