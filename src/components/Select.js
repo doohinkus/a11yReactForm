@@ -6,6 +6,9 @@ import Error from './Error';
 
 export default function Select({...props}){
     const [{ fields }, dispatch] = useStateValue();
+    useEffect(() => {
+      addField({...props}, dispatch);
+    }, []);
   
     // console.log(fields)
     const fieldValues = fields.filter((field) => field.name === props.name)[0];
@@ -27,13 +30,16 @@ export default function Select({...props}){
           })}
           {...props}
         >
-            {props.children}
+            {/* {props.children} */}
+            {props.options.map(({value, label}) => {
+              return <option
+                value={value}
+                key={value}
+              >
+                {label}
+              </option>
+            })}
         </select>
-          <p> 
-            {
-              hasFieldValues && JSON.stringify(fieldValues)
-            }
-          </p>
-          {showError && <Error>{fieldValues.errorMessage}</Error>}
+        {showError && <Error>{fieldValues.errorMessage}</Error>}
     </Fragment>)
 };

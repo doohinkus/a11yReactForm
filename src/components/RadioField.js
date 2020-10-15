@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
-import { useStateValue, useInit } from '../state/state.provider';
+import { useStateValue } from '../state/state.provider';
 import RadioOption from './RadioOption';
-import { handleBlur, addField } from  '../state/state.helpers';
-import { updateFieldValue, initFieldValues } from '../state/form.duck';
+import { addField } from  '../state/state.helpers';
 
 
 const labelStyle = {
@@ -24,7 +23,7 @@ export default function RadioField({...props}){
   useEffect(() => {
     addField({...props}, dispatch);
   }, []);
-  console.log("STATE>>>>", fields)
+  // console.log("STATE>>>>", fields)
   return (
     <Fragment>
       <fieldset style={fieldStyle}>

@@ -1,6 +1,6 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment} from 'react';
 import { useStateValue } from '../state/state.provider';
-import { handleBlur, addField } from  '../state/state.helpers';
+import { handleBlur } from  '../state/state.helpers';
 import { updateFieldValue } from '../state/form.duck';
 import Error from './Error';
 
@@ -38,11 +38,6 @@ export default function RadioOption({...props}){
           })}
           {...props}
         />
-          <p> 
-            {
-              hasFieldValues && JSON.stringify(fieldValues)
-            }
-          </p>
-          {showError && <Error>{fieldValues.errorMessage}</Error>}
+        {showError && <Error>{fieldValues.errorMessage}</Error>}
     </Fragment>)
 };

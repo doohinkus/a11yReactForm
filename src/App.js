@@ -3,12 +3,18 @@ import Input from './components/Input';
 import Select from './components/Select';
 import Field from './components/Field';
 import RadioField from './components/RadioField';
+import PageErrors from './components/PageErrors';
+import { useStateValue } from './state/state.provider';
 
 function App() {
-  const options = [{value: "one"}, {value: "two"}, {value: "three"}]
+  const [{ fields }] = useStateValue();
+
+  const radioOptions = [{value: "one"}, {value: "two"}, {value: "three"}];
+  const selectOptions = [{value: "one", label: "one"}, {value: "two", label: "two"}, {value: "three", label:"three"}];
   return (
     <div className="App">
      <h1>React Form A11y</h1>
+     <PageErrors />
      <Field legend="Personal Details">
         <Input
           label="Enter Name:"
@@ -28,7 +34,7 @@ function App() {
      <RadioField 
       legend="Please select one:"
       name="radio"
-      options={options}
+      options={radioOptions}
     />  
     <Field legend="Please select one: ">
       <Select
@@ -37,13 +43,14 @@ function App() {
         errorMessage="Please select an option."
         validate={v => v === "unselected"}
         defaultValue={"unselected"}
-      >
-        <option value="unselected">please select</option>
-        <option value="one">option one</option>
-        <option value="two">option two</option>
-        <option value="three">option three</option>
-      </Select>
+        options={selectOptions}
+      />
     </Field>
+    <pre> 
+            {
+              JSON.stringify(fields, null, 2)
+            }
+    </pre>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
-import { useStateValue, useInit } from '../state/state.provider';
+import { useStateValue } from '../state/state.provider';
 import { handleBlur, addField } from  '../state/state.helpers';
-import { updateFieldValue, initFieldValues } from '../state/form.duck';
+import { updateFieldValue } from '../state/form.duck';
 import Error from './Error';
 
 const inputStyle = {
@@ -44,11 +44,6 @@ export default function Input({...props}){
           })}
           {...props}
         />
-          <p> 
-            {
-              hasFieldValues && JSON.stringify(fieldValues)
-            }
-          </p>
-          {showError && <Error>{fieldValues.errorMessage}</Error>}
+        {showError && <Error>{fieldValues.errorMessage}</Error>}
     </Fragment>)
 };

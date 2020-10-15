@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect } from "react";
-import { updateFieldValue, initFieldValues } from './form.duck';
+import React, { createContext, useContext, useReducer } from "react";
 
 // Prepares the dataLayer
 export const StateContext = createContext();

@@ -15,6 +15,7 @@ export function handleBlur({fieldValues, errorMessage, validate, dispatch}){
   return
 }
 
+
 export const fieldValues = (fields, props) => fields.filter((field) => field.name === props.name)[0];
 
 
