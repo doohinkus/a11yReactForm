@@ -30,7 +30,8 @@ export function isCleanSubmit({fieldValues, dispatch}){
          return false;
        })
 
-    console.log("hasValidFields: ", hasValidFields)
+    console.log("hasValidFields: ", hasValidFields);
+    return hasValidFields;
   }
   return false
 }
