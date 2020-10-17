@@ -2,7 +2,6 @@ import React, {Fragment} from 'react';
 import { useStateValue } from '../state/state.provider';
 import { handleBlur } from  '../state/state.helpers';
 import { updateFieldValue } from '../state/form.duck';
-import Error from './Error';
 
 const inputStyle = {
   // display: 'inline',
@@ -34,10 +33,10 @@ export default function RadioOption({...props}){
               fieldValues, 
               validate: props.validate, 
               errorMessage: props.errorMessage
-            
           })}
+          // validate={props.validate}
           {...props}
         />
-        {showError && <Error>{fieldValues.errorMessage}</Error>}
+       
     </Fragment>)
 };

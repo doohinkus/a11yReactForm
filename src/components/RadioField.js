@@ -24,23 +24,25 @@ export default function RadioField({...props}){
     addField({...props}, dispatch);
   }, []);
   // console.log("STATE>>>>", fields)
+  const fieldValues = fields.filter((field) => field.name === props.name)[0];
+    // const fieldValues = fieldValues(fields, props);
+  const hasFieldValues = fields && fieldValues;
+  const showError = hasFieldValues && fieldValues.isReadyForValidation && fieldValues.error;
   return (
-    <Fragment>
-      <fieldset style={fieldStyle}>
-        {props.legend ? <legend style={legendStyle}>{props.legend}</legend> : null} 
+   <div>
         <label style={labelStyle}>{props.label}</label>
         {/* {props.children} */}
-        {props.options.map(({value}) => {
-          return <RadioOption
-            label={`Option ${value}: `}
-            name={props.name}
-            key={value}
-            id={value}
-            value={value}
-          />
-        })}
-        
-      </fieldset>
-    </Fragment>
+          {props.options.map(({value}) => {
+            return <RadioOption
+              label={`Option ${value}: `}
+              name={props.name}
+              key={value}
+              id={value}
+              value={value}
+              {...props}
+            />
+          })}
+          {/* {showError && fieldValues.value === props.value && <Error>{fieldValues.errorMessage}</Error>} */}
+      </div>
   )
 }
