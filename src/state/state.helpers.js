@@ -55,7 +55,7 @@ export function addField({...props}, dispatch){
 }
 
 export function setReadytoValidateTrue({fields, dispatch, errorMessage}){
-  fields.forEach(({name, value, validate}) => {
+  fields.forEach(({name, value, validate, errorMessage}) => {
     console.log("name>>", name, " value>>", value);
     dispatch(updateFieldValue({name, isReadyForValidation: true}));
     if(validate){
@@ -63,14 +63,14 @@ export function setReadytoValidateTrue({fields, dispatch, errorMessage}){
         dispatch(addFieldError(
           {
             name, 
-            errorMessage: errorMessage || "default error message"
+            errorMessage // || "default error message"
           })
         );
       } else if(!validate(value)){
         dispatch(addFieldError(
             {
               name, 
-              errorMessage: errorMessage || "default error message"
+              errorMessage //|| "default error message"
             })
           );
       }
