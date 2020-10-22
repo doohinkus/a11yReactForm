@@ -2,16 +2,13 @@ import React from 'react';
 import Input from './components/Input';
 import Select from './components/Select';
 import Field from './components/Field';
-import RadioField from './components/RadioField';
-import RadioOption from './components/RadioOption';
 import PageErrors from './components/PageErrors';
-import Error from './components/Error';
 
 import { useStateValue } from './state/state.provider';
-import { isCleanSubmit } from './state/state.helpers';
+import { isCleanSubmit, setReadytoValidateTrue } from './state/state.helpers';
 
 function App() {
-  const [{ fields }] = useStateValue();
+  const [{ fields }, dispatch] = useStateValue();
 
   const radioOptions = [{value: "one"}, {value: "two"}, {value: "three"}];
   const selectOptions = [{value: "one", label: "one"}, {value: "two", label: "two"}, {value: "three", label:"three"}];
@@ -66,15 +63,23 @@ function App() {
         label="Please select:"
         name="select"
         errorMessage="Please select an option."
-        validate={v => v === "unselected"}
+        validate={v => v !== "unselected"}
         defaultValue={"unselected"}
         options={selectOptions}
       />
     </Field>
-    <button onClick={() => isCleanSubmit({
-      fieldValues: fields,
-      dispatch: h => h
-    })}>Submit</button>
+    <button onClick={() => {
+      isCleanSubmit({ fields });
+      console.log(isCleanSubmit({ fields }));
+      // if clean submit -> submit
+      if(isCleanSubmit({fields})){
+        console.log("success!!!!")
+      } else{
+        setReadytoValidateTrue({fields, dispatch});
+        // otherwise, set all fields to ready for validate and run validations
+      }
+    }
+  }>Submit</button>
     <pre> 
             {
               JSON.stringify(fields, null, 2)

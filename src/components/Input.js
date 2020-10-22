@@ -12,38 +12,33 @@ const labelStyle = {
   display: 'block'
 }
 export default function Input({...props}){
+    const [{ fields }, dispatch] = useStateValue();
     useEffect(() => {
-      // function addField({...props}){
-      //   dispatch(initFieldValues({...props}));
-      // }
-      // function removeField({name}){
-      //   console.log("removed ")
-      //   dispatch(initFieldValues({name}));
-      // }
       addField({...props}, dispatch);
       // return removeField({...props.name});
     }, []);
-    const [{ fields }, dispatch] = useStateValue();
-    // console.log(fields)
-    const fieldValues = fields.filter((field) => field.name === props.name)[0];
+    const fieldValues = fields.filter(({name}) => name === props.name)[0];
     const hasFieldValues = fields && fieldValues;
     const showError = hasFieldValues && fieldValues.isReadyForValidation && fieldValues.error;
-   
+    
+    // console.log(">>>>>", fieldValues, "<<<<<")
     return (<Fragment>
         <label style={labelStyle}>{props.label}</label>
         <input 
           style={inputStyle}
           tabIndex={0}
-          onChange={e => dispatch(updateFieldValue(e))}
-          onBlur={() => handleBlur({ 
+          onChange={e => dispatch(updateFieldValue({
+            isReadyForValidation: true,
+            value: e.target.value,
+            ...props
+          }))}
+          onBlur={e => handleBlur({ 
               dispatch,
-              fieldValues, 
-              validate: props.validate, 
-              errorMessage: props.errorMessage
-            
+              value: e.target.value,
+              ...props
           })}
           {...props}
         />
-        {showError && <Error>{fieldValues.errorMessage}</Error>}
+        {showError && <Error>{props.errorMessage}</Error>}
     </Fragment>)
 };

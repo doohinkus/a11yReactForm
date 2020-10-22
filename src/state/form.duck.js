@@ -53,7 +53,7 @@ function removeFieldByName(state, action){
 // ACTIONS
 export const ACTIONS = {
   CHANGE_FIELD_VALUE: "CHANGE_FIELD_VALUE",
-  VALIDATE_FIELD_VALUE: "VALIDATE_FIELD_VALUE",
+  SET_FIELD_VALUE: "SET_FIELD_VALUE",
   ADD_FIELD_ERROR: "ADD_FIELD_ERROR",
   CLEAR_FIELD_ERROR: "CLEAR_FIELD_ERROR",
   REMOVE_FIELD_VALUE: "REMOVE_FIELD_VALUE",
@@ -75,6 +75,14 @@ export function initFieldValues({...props}){
       }
   }
 }
+export function setFieldValue(payload){
+    return {
+        type: ACTIONS.SET_FIELD_VALUE,
+        payload: {
+            ...payload
+        }
+    }
+}
 
 export function removeFieldValues({...props}){
     console.log("PROPS>>>>", ...props)
@@ -86,14 +94,23 @@ export function removeFieldValues({...props}){
     }
 }
 
-export function updateFieldValue({target}){
+// export function updateFieldValue({target}){
+//     // use props
+//   return {
+//       type: ACTIONS.CHANGE_FIELD_VALUE,
+//       payload: {
+//         name: target.name,
+//         value: target.value,
+//         isReadyForValidation: true
+//       }
+//     }
+// }
+export function updateFieldValue(payload){
     // use props
   return {
       type: ACTIONS.CHANGE_FIELD_VALUE,
       payload: {
-        name: target.name,
-        value: target.value,
-        isReadyForValidation: true
+        ...payload
       }
     }
 }
@@ -128,6 +145,7 @@ export const formReducer = (state, action) => {
         case ACTIONS.CHANGE_FIELD_VALUE:
         case ACTIONS.CLEAR_FIELD_ERROR:
         case ACTIONS.ADD_FIELD_ERROR:
+        case ACTIONS.SET_FIELD_VALUE:
             return {
                 ...state,
                 fields: [...updatedFieldData(state, action)]

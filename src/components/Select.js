@@ -10,7 +10,6 @@ export default function Select({...props}){
       addField({...props}, dispatch);
     }, []);
   
-    // console.log(fields)
     const fieldValues = fields.filter((field) => field.name === props.name)[0];
     const hasFieldValues = fields && fieldValues;
     const showError = hasFieldValues && fieldValues.isReadyForValidation && fieldValues.error;
@@ -20,13 +19,15 @@ export default function Select({...props}){
         <select 
           tabIndex={0}
           name={props.name || null}
-          onChange={e => dispatch(updateFieldValue(e))}
-          onBlur={() => handleBlur({ 
+          onChange={e => dispatch(updateFieldValue({
+            isReadyForValidation: true,
+            value: e.target.value,
+            ...props
+          }))}
+          onBlur={e => handleBlur({ 
               dispatch,
-              fieldValues, 
-              validate: props.validate, 
-              errorMessage: props.errorMessage
-            
+              value: e.target.value,
+              ...props
           })}
           {...props}
         >
