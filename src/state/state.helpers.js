@@ -1,5 +1,15 @@
 import { addFieldError, clearFieldError, initFieldValues, updateFieldValue } from '../state/form.duck';
 
+
+export function handleChange({dispatch, e, ...props}){
+  console.log("FIELD VALUEs>> ", props);
+  dispatch(updateFieldValue({
+    isReadyForValidation: true,
+    value: e.target.value,
+    ...props
+  }))
+
+}
 export function handleBlur({dispatch, ...props}){
   console.log("FIELD VALUEs>> ", props)
   if(props && props.value && props.validate){
