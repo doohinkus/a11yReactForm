@@ -14,7 +14,7 @@ const fieldStyle = {
 export default function PageErrors(){
     const [{ fields }] = useStateValue();
     // console.log(fields)
-    const errors = fields.filter(({error}) =>  error);
+    const errors = fields.filter(({error, isReadyForValidation}) =>  error && isReadyForValidation);
     // console.log("ERRORS>>>> ", errors, fields);
 
     return (

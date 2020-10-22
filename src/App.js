@@ -68,16 +68,18 @@ function App() {
         options={selectOptions}
       />
     </Field>
-    <button onClick={() => {
-      isCleanSubmit({ fields });
-      console.log(isCleanSubmit({ fields }));
-      // if clean submit -> submit
-      if(isCleanSubmit({fields})){
-        console.log("success!!!!")
-      } else{
-        setReadytoValidateTrue({fields, dispatch});
-        // otherwise, set all fields to ready for validate and run validations
-      }
+    <button 
+      style={{margin:"auto", display: 'block'}}
+      onClick={() => {
+        isCleanSubmit({ fields });
+        console.log(isCleanSubmit({ fields }));
+        // if clean submit -> submit
+        if(isCleanSubmit({fields})){
+          console.log("success!!!!")
+        } else{
+          setReadytoValidateTrue({fields, dispatch});
+          // otherwise, set all fields to ready for validate and run validations
+        }
     }
   }>Submit</button>
     <pre> 
