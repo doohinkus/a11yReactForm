@@ -14,7 +14,9 @@ const fieldStyle = {
 export default function PageErrors(){
     const [{ fields }] = useStateValue();
     // console.log(fields)
-    const errors = fields.filter(({error, isReadyForValidation}) =>  error && isReadyForValidation);
+    const errors = fields
+       .filter(({error, isReadyForValidation}) =>  error && isReadyForValidation)
+       .sort((a,b) => a.rank - b.rank)
     // console.log("ERRORS>>>> ", errors, fields);
 
     return (
